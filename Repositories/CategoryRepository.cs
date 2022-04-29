@@ -6,6 +6,8 @@ public interface ICategoryRepository
     Task DeleteCategory(string id);
     Task<List<Category>> GetAllCategorys();
     Task<Category> GetCategory(string id);
+    Task<List<Category>> GetCategoryById(string categoryId);
+    Task<List<Category>> GetCategoryByName(string categoryName);
     Task<Category> UpdateCategory(Category category);
 }
 
@@ -17,6 +19,18 @@ public class CategoryRepository : ICategoryRepository
     {
         _context = context;
     }
+
+    //gevaarlijk wordt per keer opgevragen betaald. Kijken voor eventueel betere optie.
+    public async Task<List<Category>> GetAllCategorys()
+    {
+        return await _context.CategoriesCollection.Find(_ => true).ToListAsync();
+    }
+
+    public async Task<Category> GetCategory(string id) => await _context.CategoriesCollection.Find<Category>(id).FirstOrDefaultAsync();
+
+    public async Task<List<Category>> GetCategoryByName(string categoryName) => await _context.CategoriesCollection.Find(c => c.CategoryName == categoryName).ToListAsync();
+
+    public async Task<List<Category>> GetCategoryById(string categoryId) => await _context.CategoriesCollection.Find(c => c.Id == categoryId).ToListAsync();
 
     public async Task<Category> AddCategory(Category newCategory)
     {
@@ -53,12 +67,6 @@ public class CategoryRepository : ICategoryRepository
         }
     }
 
-    //gevaarlijk wordt per keer opgevragen betaald. Kijken voor eventueel betere optie.
-    public async Task<List<Category>> GetAllCategorys()
-    {
-        return await _context.CategoriesCollection.Find(_ => true).ToListAsync();
-    }
 
-    public async Task<Category> GetCategory(string id) => await _context.CategoriesCollection.Find<Category>(id).FirstOrDefaultAsync();
 
 }

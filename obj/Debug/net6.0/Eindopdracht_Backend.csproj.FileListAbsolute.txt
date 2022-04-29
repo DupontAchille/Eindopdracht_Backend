@@ -63,3 +63,14 @@ D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\obj\Debug\net6.0\refint\Eindopdrac
 D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\obj\Debug\net6.0\Eindopdracht_Backend.pdb
 D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\obj\Debug\net6.0\Eindopdracht_Backend.genruntimeconfig.cache
 D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\obj\Debug\net6.0\ref\Eindopdracht_Backend.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\appsettings.Docker.json
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\FluentValidation.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\2MCT\SEM2\Backend\src\Eindopdracht_Backend\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

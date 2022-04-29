@@ -1,0 +1,19 @@
+POST http://localhost:3000/setuparea HTTP/1.1
+Content-Type: application/json
+
+###
+POST http://localhost:3000/setupcategory HTTP/1.1
+Content-Type: application/json
+
+###
+POST http://localhost:3000/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Achille",
+    "password": "Secret"
+}
+
+###
+GET http://localhost:3000/getareas HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkR1cG9udCBBY2hpbGxlIiwibmJmIjoxNjUxMjMzNzU3LCJleHAiOjE2NTEyMzczNTcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjMwMDAiLCJhdWQiOiJtZWFsX2FwaV91c2VycyJ9.TZOmF5yBxpZt71pHf_f53Ra6uXoACvoxVZ9IO1IYyb8
