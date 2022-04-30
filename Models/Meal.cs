@@ -17,6 +17,7 @@ public class Meal
     public string? MealTags { get; set; }
 
     public string? YoutubeLink { get; set; }
+    public string? MealSource { get; set; }
 
     public string? Ingredient1 { get; set; }
     public string? Ingredient2 { get; set; }
@@ -33,6 +34,12 @@ public class Meal
     public string? Ingredient13 { get; set; }
     public string? Ingredient14 { get; set; }
     public string? Ingredient15 { get; set; }
+    public string? Ingredient16 { get; set; }
+    public string? Ingredient17 { get; set; }
+    public string? Ingredient18 { get; set; }
+    public string? Ingredient19 { get; set; }
+    public string? Ingredient20 { get; set; }
+
     public string? Measure1 { get; set; }
     public string? Measure2 { get; set; }
     public string? Measure3 { get; set; }
@@ -48,5 +55,10 @@ public class Meal
     public string? Measure13 { get; set; }
     public string? Measure14 { get; set; }
     public string? Measure15 { get; set; }
+    public string? Measure16 { get; set; }
+    public string? Measure17 { get; set; }
+    public string? Measure18 { get; set; }
+    public string? Measure19 { get; set; }
+    public string? Measure20 { get; set; }
     public DateTime CreatedOn { get; set; }
 }

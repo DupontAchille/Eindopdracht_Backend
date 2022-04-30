@@ -1,10 +1,14 @@
 namespace Meals.Repositories;
+
 public interface IMealRepository
 {
     Task<Meal> AddMeal(Meal newMeal);
-    Task DeleteMeal(string id);
+    Task<Meal> DeleteMeal(string id);
     Task<List<Meal>> GetAllMeals();
     Task<Meal> GetMeal(string id);
+    Task<List<Meal>> GetMealByName(string MealName);
+    Task<List<Meal>> GetMealsByAreaName(string areaName);
+    Task<Meal> UpdateMeal(Meal meal, string id);
 }
 
 public class MealRepository : IMealRepository
@@ -15,41 +19,6 @@ public class MealRepository : IMealRepository
         _context = context;
     }
 
-    public async Task<Meal> AddMeal(Meal newMeal)
-    {
-        await _context.MealsCollection.InsertOneAsync(newMeal);
-        return newMeal;
-    }
-    public async Task DeleteMeal(string id)
-    {
-        try
-        {
-            var filter = Builders<Meal>.Filter.Eq("Id", id);
-            var result = await _context.MealsCollection.DeleteOneAsync(filter);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-            throw;
-        }
-    }
-
-    public async Task<Meal> UpdateMeal(Meal meal)
-    {
-        try
-        {
-            var filter = Builders<Meal>.Filter.Eq("Id", meal.Id);
-            var update = Builders<Meal>.Update.Set("Name", meal.MealName).Set("Instructions", meal.MealInstructions);
-            var result = await _context.MealsCollection.UpdateOneAsync(filter, update);
-            return await GetMeal(meal.Id);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-            throw;
-        }
-    }
-
     //gevaarlijk wordt per keer opgevragen betaald. Kijken voor eventueel betere optie.
     public async Task<List<Meal>> GetAllMeals()
     {
@@ -58,5 +27,46 @@ public class MealRepository : IMealRepository
 
     public async Task<Meal> GetMeal(string id) => await _context.MealsCollection.Find<Meal>(id).FirstOrDefaultAsync();
 
-    public async Task<Meal> GetMealByName(string name) => await _context.MealsCollection.Find<Meal>(name).FirstOrDefaultAsync();
+    public async Task<List<Meal>> GetMealByName(string MealName) => await _context.MealsCollection.Find(m => m.MealName == MealName).ToListAsync();
+
+    public async Task<List<Meal>> GetMealsByAreaName(string areaName) =>
+    await _context.MealsCollection.Find(a => a.MealArea.AreaName == areaName).ToListAsync();
+
+    public async Task<Meal> AddMeal(Meal newMeal)
+    {
+        await _context.MealsCollection.InsertOneAsync(newMeal);
+        return newMeal;
+    }
+
+    public async Task<Meal> DeleteMeal(string id)
+    {
+        try
+        {
+            var filter = Builders<Meal>.Filter.Eq("Id", id);
+            var result = await _context.MealsCollection.DeleteOneAsync(filter);
+            return await GetMeal(id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+    }
+
+    public async Task<Meal> UpdateMeal(Meal meal, string id)
+    {
+        try
+        {
+            var filter = Builders<Meal>.Filter.Eq("Id", id);
+            var result = await _context.MealsCollection.ReplaceOneAsync(filter, meal);
+            return await GetMeal(id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+    }
+
+
 }

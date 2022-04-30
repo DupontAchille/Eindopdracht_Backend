@@ -46,17 +46,33 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[10.4.0, )"
+            },
             "HotChocolate.AspNetCore": {
               "target": "Package",
               "version": "[12.6.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.16.0, )"
             },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.14.1, )"
             },
-            "Swashbuckle.AspNetCore": {
+            "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[6.1.5, )"
+              "version": "[6.16.0, )"
+            },
+            "swashbuckle.aspnetcore": {
+              "target": "Package",
+              "version": "[6.3.0, )"
             }
           },
           "imports": [
