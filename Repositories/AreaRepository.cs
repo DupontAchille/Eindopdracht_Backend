@@ -5,10 +5,10 @@ public interface IAreaRepository
     Task<Area> AddArea(Area newArea);
     Task<Area> DeleteArea(string id);
     Task<List<Area>> GetAllAreas();
-    Task<Area> GetArea(string Id);
+    Task<Area> GetArea(string id);
     Task<List<Area>> GetAreaById(string areaId);
     Task<List<Area>> GetAreaByName(string areaName);
-    Task<Area> UpdateArea(string id, Area area);
+    Task<Area> UpdateArea(Area area, string id);
 }
 
 public class AreaRepository : IAreaRepository
@@ -26,9 +26,9 @@ public class AreaRepository : IAreaRepository
         return await _context.AreasCollection.Find(_ => true).ToListAsync();
     }
 
-    public async Task<Area> GetArea(string Id)
+    public async Task<Area> GetArea(string id)
     {
-        return await _context.AreasCollection.Find<Area>(Id).FirstOrDefaultAsync();
+        return await _context.AreasCollection.Find<Area>(id).FirstOrDefaultAsync();
     }
     public async Task<List<Area>> GetAreaByName(string areaName) => await _context.AreasCollection.Find(a => a.AreaName == areaName).ToListAsync();
     public async Task<List<Area>> GetAreaById(string areaId) =>
@@ -55,14 +55,13 @@ await _context.AreasCollection.Find(a => a.Id == areaId).ToListAsync();
         }
     }
 
-    public async Task<Area> UpdateArea(string id, Area area)
+    public async Task<Area> UpdateArea(Area area, string id)
     {
         try
         {
-            var filter = Builders<Area>.Filter.Eq("Id", area.Id);
-            var update = Builders<Area>.Update.Set("Name", area.AreaName).Set("Continent", area.AreaContinent);
-            var result = await _context.AreasCollection.UpdateOneAsync(filter, update);
-            return await GetArea(area.Id);
+            var filter = Builders<Area>.Filter.Eq("Id", id);
+            var result = await _context.AreasCollection.ReplaceOneAsync(filter, area);
+            return await GetArea(id);
         }
         catch (Exception ex)
         {
@@ -70,5 +69,6 @@ await _context.AreasCollection.Find(a => a.Id == areaId).ToListAsync();
             throw;
         }
     }
+
 
 }

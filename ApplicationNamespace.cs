@@ -20,5 +20,7 @@ global using Meals.Configuration;
 global using Meals.Repositories;
 global using Meals.MealService;
 global using Meals.GraphQL.Queries;
+global using Meals.GraphQL.Meals;
+global using Meals.GraphQL.Mutations;
 global using Meals.Validators;
 global using Meals.API.Keysettings;

@@ -6,6 +6,11 @@ POST http://localhost:3000/setupcategory HTTP/1.1
 Content-Type: application/json
 
 ###
+POST http://localhost:3000/setupmeal HTTP/1.1
+Content-Type: application/json
+###
+GET http://localhost:3000/getcategories HTTP/1.1
+###
 POST http://localhost:3000/authenticate HTTP/1.1
 Content-Type: application/json
 

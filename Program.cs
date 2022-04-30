@@ -103,11 +103,31 @@ app.MapPost("/authenticate", async (IAuthenticationService authenticationService
 });
 
 // app.MapPost("/setuparea", (IMealService area) => area.SetupAreaData());
-
 // app.MapPost("/setupcategory", (IMealService category) => category.SetupCategoryData());
+// app.MapPost("/setupmeal", (IMealService meal) => meal.SetupMealData());
 
+app.MapGet("/getmeals", async (IMealService meal) => await meal.GetMeals());
 
+app.MapDelete("/deletemeal/{id}", async (IMealService MealService, string id) =>
+{
+    var result = await MealService.DeleteMeal(id);
+    return Results.Ok(result);
 
+});
+
+app.MapGet("/getmealbyname/{MealName}", async (IMealService MealService, string MealName) =>
+{
+    var result = await MealService.GetOneMealByName(MealName);
+    return Results.Ok(result);
+});
+
+app.MapGet("/getmealbyareaname/{AreaName}", async (IMealService MealService, string AreaName) =>
+{
+    var result = await MealService.GetMealsByAreaName(AreaName);
+    return Results.Ok(result);
+});
+
+// app.MapPut();
 
 app.MapPost("/addarea", async (IMealService MealService, IValidator<Area> validator, Area area) =>
 {
@@ -124,6 +144,65 @@ app.MapPost("/addarea", async (IMealService MealService, IValidator<Area> valida
     }
 });
 
+app.MapDelete("/deletearea/{id}", async (IMealService MealService, string id) =>
+{
+    var result = await MealService.DeleteArea(id);
+    return Results.Ok(result);
+
+});
+app.MapPut("/updatemeal", async (IMealService mealService, IValidator<Meal> validator, Meal meal, string id) =>
+{
+    var validatorResult = validator.Validate(meal);
+    if (!(validatorResult.IsValid))
+    {
+        var errors = validatorResult.Errors.Select(err => new { errors = err.ErrorMessage });
+        return Results.BadRequest(errors);
+    }
+    try
+    {
+        var result = await mealService.UpdateMeal(meal, id);
+        return Results.Ok(result);
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.Problem();
+    }
+});
+app.MapGet("/getareabyname/{AreaName}", async (IMealService MealService, string AreaName) =>
+{
+    var result = await MealService.GetOneAreaByName(AreaName);
+    return Results.Ok(result);
+});
+app.MapGet("/getareas", [Authorize] async (IMealService area) => await area.GetAreas());
+app.MapGet("/getareabyid/{id}", async (IMealService MealService, string areaId) =>
+{
+    var result = await MealService.GetOneAreaById(areaId);
+    return Results.Ok(result);
+});
+app.MapPut("/updatearea", async (IMealService mealService, IValidator<Area> validator, Area area, string id) =>
+{
+    var validatorResult = validator.Validate(area);
+    if (!(validatorResult.IsValid))
+    {
+        var errors = validatorResult.Errors.Select(err => new { errors = err.ErrorMessage });
+        return Results.BadRequest(errors);
+    }
+    try
+    {
+        var result = await mealService.UpdateArea(area, id);
+        return Results.Ok(result);
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.Problem();
+    }
+});
+
+
+app.MapGet("/getcategories", async (IMealService category) => await category.GetCategories());
+
 app.MapPost("/addcategory", async (IMealService MealService, IValidator<Category> validator, Category category) =>
 {
     var validationResult = validator.Validate(category);
@@ -139,24 +218,6 @@ app.MapPost("/addcategory", async (IMealService MealService, IValidator<Category
     }
 });
 
-app.MapDelete("/deletearea/{id}", async (IMealService MealService, string Id) => await MealService.DeleteArea(Id));
-
-app.MapGet("/getareas", [Authorize] async (IMealService area) => await area.GetAreas());
-
-app.MapGet("/getcategories", async (IMealService category) => await category.GetCategories());
-
-app.MapGet("/getareabyname/{AreaName}", async (IMealService MealService, string AreaName) =>
-{
-    var result = await MealService.GetOneAreaByName(AreaName);
-    return Results.Ok(result);
-});
-
-app.MapGet("/getareabyid/{id}", async (IMealService MealService, string areaId) =>
-{
-    var result = await MealService.GetOneAreaById(areaId);
-    return Results.Ok(result);
-});
-
 app.MapGet("/getcategorybyname/{CategoryName}", async (IMealService MealService, string CategoryName) =>
 {
     var result = await MealService.GetOneCategoryByName(CategoryName);
@@ -169,7 +230,32 @@ app.MapGet("/getcategorybyid/{id}", async (IMealService MealService, string cate
     return Results.Ok(result);
 });
 
-// app.MapPut();
+app.MapDelete("/deletecategory/{id}", async (IMealService MealService, string id) =>
+{
+    var result = await MealService.DeleteCategory(id);
+    return Results.Ok(result);
+
+});
+
+app.MapPut("/updatecategory", async (IMealService mealService, IValidator<Category> validator, Category category, string id) =>
+{
+    var validatorResult = validator.Validate(category);
+    if (!(validatorResult.IsValid))
+    {
+        var errors = validatorResult.Errors.Select(err => new { errors = err.ErrorMessage });
+        return Results.BadRequest(errors);
+    }
+    try
+    {
+        var result = await mealService.UpdateCategory(category, id);
+        return Results.Ok(result);
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.Problem();
+    }
+});
 
 
 app.UseSwagger();

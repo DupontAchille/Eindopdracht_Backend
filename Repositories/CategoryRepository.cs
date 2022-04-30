@@ -3,12 +3,12 @@ namespace Meals.Repositories;
 public interface ICategoryRepository
 {
     Task<Category> AddCategory(Category newCategory);
-    Task DeleteCategory(string id);
+    Task<Category> DeleteCategory(string id);
     Task<List<Category>> GetAllCategorys();
     Task<Category> GetCategory(string id);
     Task<List<Category>> GetCategoryById(string categoryId);
     Task<List<Category>> GetCategoryByName(string categoryName);
-    Task<Category> UpdateCategory(Category category);
+    Task<Category> UpdateCategory(Category category, string id);
 }
 
 public class CategoryRepository : ICategoryRepository
@@ -37,12 +37,13 @@ public class CategoryRepository : ICategoryRepository
         await _context.CategoriesCollection.InsertOneAsync(newCategory);
         return newCategory;
     }
-    public async Task DeleteCategory(string id)
+    public async Task<Category> DeleteCategory(string id)
     {
         try
         {
             var filter = Builders<Category>.Filter.Eq("Id", id);
             var result = await _context.CategoriesCollection.DeleteOneAsync(filter);
+            return await GetCategory(id);
         }
         catch (Exception ex)
         {
@@ -51,14 +52,13 @@ public class CategoryRepository : ICategoryRepository
         }
     }
 
-    public async Task<Category> UpdateCategory(Category category)
+    public async Task<Category> UpdateCategory(Category category, string id)
     {
         try
         {
-            var filter = Builders<Category>.Filter.Eq("Id", category.Id);
-            var update = Builders<Category>.Update.Set("Name", category.CategoryName);
-            var result = await _context.CategoriesCollection.UpdateOneAsync(filter, update);
-            return await GetCategory(category.Id);
+            var filter = Builders<Category>.Filter.Eq("Id", id);
+            var result = await _context.CategoriesCollection.ReplaceOneAsync(filter, category);
+            return await GetCategory(id);
         }
         catch (Exception ex)
         {
