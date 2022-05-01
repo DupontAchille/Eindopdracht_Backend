@@ -108,6 +108,21 @@ app.MapPost("/authenticate", async (IAuthenticationService authenticationService
 
 app.MapGet("/getmeals", async (IMealService meal) => await meal.GetMeals());
 
+app.MapPost("/addmeal", async (IMealService MealService, IValidator<Meal> validator, Meal meal) =>
+{
+    var validationResult = validator.Validate(meal);
+    if (validationResult.IsValid)
+    {
+        var result = await MealService.AddMeal(meal);
+        return Results.Ok(result);
+    }
+    else
+    {
+        var errors = validationResult.Errors.Select(x => new { errors = x.ErrorMessage });
+        return Results.BadRequest(errors);
+    }
+});
+
 app.MapDelete("/deletemeal/{id}", async (IMealService MealService, string id) =>
 {
     var result = await MealService.DeleteMeal(id);
@@ -127,29 +142,6 @@ app.MapGet("/getmealbyareaname/{AreaName}", async (IMealService MealService, str
     return Results.Ok(result);
 });
 
-// app.MapPut();
-
-app.MapPost("/addarea", async (IMealService MealService, IValidator<Area> validator, Area area) =>
-{
-    var validationResult = validator.Validate(area);
-    if (validationResult.IsValid)
-    {
-        var result = await MealService.AddArea(area);
-        return Results.Ok(result);
-    }
-    else
-    {
-        var errors = validationResult.Errors.Select(x => new { errors = x.ErrorMessage });
-        return Results.BadRequest(errors);
-    }
-});
-
-app.MapDelete("/deletearea/{id}", async (IMealService MealService, string id) =>
-{
-    var result = await MealService.DeleteArea(id);
-    return Results.Ok(result);
-
-});
 app.MapPut("/updatemeal", async (IMealService mealService, IValidator<Meal> validator, Meal meal, string id) =>
 {
     var validatorResult = validator.Validate(meal);
@@ -169,13 +161,34 @@ app.MapPut("/updatemeal", async (IMealService mealService, IValidator<Meal> vali
         return Results.Problem();
     }
 });
+
+app.MapPost("/addarea", async (IMealService MealService, IValidator<Area> validator, Area area) =>
+{
+    var validationResult = validator.Validate(area);
+    if (validationResult.IsValid)
+    {
+        var result = await MealService.AddArea(area);
+        return Results.Ok(result);
+    }
+    else
+    {
+        var errors = validationResult.Errors.Select(x => new { errors = x.ErrorMessage });
+        return Results.BadRequest(errors);
+    }
+});
+app.MapDelete("/deletearea/{id}", async (IMealService MealService, string id) =>
+{
+    var result = await MealService.DeleteArea(id);
+    return Results.Ok(result);
+
+});
 app.MapGet("/getareabyname/{AreaName}", async (IMealService MealService, string AreaName) =>
 {
     var result = await MealService.GetOneAreaByName(AreaName);
     return Results.Ok(result);
 });
-app.MapGet("/getareas", [Authorize] async (IMealService area) => await area.GetAreas());
-app.MapGet("/getareabyid/{id}", async (IMealService MealService, string areaId) =>
+app.MapGet("/getareas", async (IMealService area) => await area.GetAreas());
+app.MapGet("/getareabyid/{id}", [Authorize] async (IMealService MealService, string areaId) =>
 {
     var result = await MealService.GetOneAreaById(areaId);
     return Results.Ok(result);
@@ -257,6 +270,7 @@ app.MapPut("/updatecategory", async (IMealService mealService, IValidator<Catego
     }
 });
 
+app.MapGet("/helloworld", () => mongoSettings);
 
 app.UseSwagger();
 // app.UseSwaggerUI();
@@ -266,4 +280,6 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty;
 });
 app.MapGraphQL();
-app.Run("http://localhost:3000");
+app.Run("http://0.0.0.0:3000");
+//Hack om testen te doen werken 
+public partial class Program { }

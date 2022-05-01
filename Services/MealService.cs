@@ -68,7 +68,7 @@ public class MealService : IMealService
             {
                 MealName = "Pate Chinois",
                 MealCategory = categories[0],
-                MealArea = areas[6],
+                MealArea = areas[2],
                 MealInstructions = "In a large pot of salted water, cook the potatoes until they are very tender. Drain.\r\nWith a masher, coarsely crush the potatoes with at least 30 ml (2 tablespoons) of butter. With an electric mixer, purée with the milk. Season with salt and pepper. Set aside.\r\nWith the rack in the middle position, preheat the oven to 190 °C (375 °F).\r\nIn a large skillet, brown the onion in the remaining butter. Add the meat and cook until golden brown. Season with salt and pepper. Remove from the heat.\r\nLightly press the meat at the bottom of a 20-cm (8-inch) square baking dish. Cover with the corn and the mashed potatoes. Sprinkle with paprika and parsley.\r\nBake for about 30 minutes. Finish cooking under the broiler. Let cool for 10 minutes.",
                 MealThumbImg = "https://cdn.pratico-pratiques.com/app/uploads/sites/4/2018/08/30184324/pate-chinois-revisite.jpeg",
                 MealTags = "Main, Alcoholic",
@@ -98,7 +98,7 @@ public class MealService : IMealService
             new Meal()
             {
                 MealName = "Parkin Cake",
-                MealCategory = categories[6],
+                MealCategory = categories[2],
                 MealArea = areas[1],
                 MealInstructions = "Heat oven to 160C/140C fan/gas 3. Grease a deep 22cm/9in square cake tin and line with baking parchment. Beat the egg and milk together with a fork.\r\n\r\nGently melt the syrup, treacle, sugar and butter together in a large pan until the sugar has dissolved. Remove from the heat. Mix together the oatmeal, flour and ginger and stir into the syrup mixture, followed by the egg and milk.\r\n\r\nPour the mixture into the tin and bake for 50 mins - 1 hr until the cake feels firm and a little crusty on top. Cool in the tin then wrap in more parchment and foil and keep for 3-5 days before eating if you can – it’ll become softer and stickier the longer you leave it, up to 2 weeks.\r\n",
                 MealThumbImg = "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-890458_10-8360227.jpg",
